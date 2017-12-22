@@ -7,6 +7,9 @@
     "comment": "An IPC socket entry can be $TMPDIR, or $TMPDIR/some/subdir.",
     "comment": "The poll rate unit is seconds.",
 
+    "comment": "tcp-sockets array entry format is:",
+    "comment": "http://localhost:8000/debug/vars",
+
     "endpoints": {
         "pollrates": {
             "search": 5,
@@ -14,16 +17,6 @@
         },
         "ipc-sockets": [ "$TMPDIR" ],
         "tcp-sockets": [
-            "http://localhost:8000/debug/vars",
-            "http://localhost:8001/debug/vars",
-            "http://localhost:8002/debug/vars",
-            "http://localhost:8003/debug/vars",
-            "http://localhost:8004/debug/vars",
-            "http://localhost:8005/debug/vars",
-            "http://localhost:8006/debug/vars",
-            "http://localhost:8007/debug/vars",
-            "http://localhost:8008/debug/vars",
-            "http://localhost:8009/debug/vars"
         ]
     },
 
