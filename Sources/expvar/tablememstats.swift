@@ -298,18 +298,16 @@ class TableMemStatsController: NSObject {
         self.tableMemStats.bindWith(newtableview)
         super.init()
 
-        let offset = CGPoint(x: 50, y: 50)
-
         let configName = config.memStatsConfigName
         let contentRect = config.frame(
             windowName: configName,
             frames: frames,
-            relativeScreen: false,
+            relativeScreen: true,
             top: false,
-            size: CGSize(width: 400, height: 200),
-            offset: offset,
-            instanceOffset: offset,
-            instance: 0) // Just one memstats window from parent.
+            size: CGSize(width: 300, height: 780),
+            offset: CGPoint(x: 100, y: 0),
+            instanceOffset: CGPoint(x: 40, y: 40),
+            instance: connection.id)
 
         let viewController = TableViewController(tableview: newtableview)
 

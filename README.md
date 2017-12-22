@@ -42,6 +42,12 @@ one thread for the window and mouse and keyboard interactions, as is usual with 
 A config file named expvar.json is read when the program begins.
 Details are in [Config](CONFIG.md).
 
+The app is meant to work with no config file being found, but it's not quite there.
+For now, either run expvar from the directory where expvar.json resides, or move
+expvar.json to your home or ~/upspin/ directory.
+Look for this to be fixed soon. The config file is meant to help tweak the operation but
+should not be required.
+
 ## Summary Window
 
 There is a main window that lists the endpoints found, along with their status and running details.

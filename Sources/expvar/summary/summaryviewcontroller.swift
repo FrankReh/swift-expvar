@@ -351,10 +351,10 @@ class SummaryView: NSView {
 }
 
 private func configSummaryFrames(boundSize: CGSize, name1: String, name2: String) -> (NSRect, NSRect) {
-    let x = config.find("windows", "Summary", name1, "origin", "x") as? CGFloat ?? 10
-    let y = config.find("windows", "Summary", name1, "origin", "y") as? CGFloat ?? 10
+    let x = config.find("windows", "Summary", name1, "origin", "x") as? CGFloat ?? 24
+    let y = config.find("windows", "Summary", name1, "origin", "y") as? CGFloat ?? 63
     let widthRatio = config.find("windows", "Summary", name1, "width-ratio") as? CGFloat ?? 0.25
-    let gap = config.find("windows", "Summary", name2, "gap") as? CGFloat ?? 10
+    let gap = config.find("windows", "Summary", name2, "gap") as? CGFloat ?? 8
 
     let frame1 = NSRect(x: x, y: y, width: (widthRatio * boundSize.width), height: (boundSize.height - 2*y))
     var frame2 = frame1

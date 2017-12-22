@@ -12,10 +12,10 @@ class SummaryWindowController: NSWindowController {
         // Make a window
         // Init super window controller with window
 
-        let contentRect = config.summaryFrame(top: false,
+        let contentRect = config.summaryFrame(top: true,
                                            screenFrame: NSScreen.main?.frame ?? defaultContentRect,
-                                           size: defaultContentRect.size,
-                                           offset: defaultContentRect.origin)
+                                           size: CGSize(width: 668, height: 526),
+                                           offset: CGPoint(x: 583, y: 59))
 
         let viewController = SummaryViewController(frame: contentRect)
 

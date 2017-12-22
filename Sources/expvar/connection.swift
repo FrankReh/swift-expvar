@@ -82,6 +82,7 @@ class Connection {
         // Else it was never created or it was already reclaimed, so create one now.
         let t = TableUserController(
                     description: self.description,
+                    instance: self.id,
                     frames: WindowFrames(window: summaryWindowController.window),
                     observable: varsObservable)
         self.tableUserControllerI = t

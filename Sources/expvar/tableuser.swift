@@ -261,7 +261,7 @@ class TableUserController: NSObject {
     private let viewController: TableViewController // TBD is this needed?
     private var controller: NSWindowController?
 
-    init(description: String, frames: Frames, observable: VarsObservable?) {
+    init(description: String, instance: Int, frames: Frames, observable: VarsObservable?) {
 
         let newtableview = NSTableView()
         newtableview.columnAutoresizingStyle = .noColumnAutoresizing
@@ -269,18 +269,16 @@ class TableUserController: NSObject {
 
         self.tableUser = TableUser(newtableview)
 
-        let offset = CGPoint(x: 50, y: 50)
-
         let configName = config.userConfigName
         let contentRect = config.frame(
             windowName: configName,
             frames: frames,
-            relativeScreen: false,
+            relativeScreen: true,
             top: false,
-            size: CGSize(width: 400, height: 200),
-            offset: offset,
-            instanceOffset: offset,
-            instance: 0) // Just one user window from parent.
+            size: CGSize(width: 450, height: 200),
+            offset: CGPoint(x: 300, y: 0),
+            instanceOffset: CGPoint(x: 40, y: 40),
+            instance: instance)
 
         let viewController = TableViewController(tableview: newtableview)
 

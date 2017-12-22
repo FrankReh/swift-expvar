@@ -816,16 +816,15 @@ class JsonCompareController: NSObject {
 
         // Panel frame, button area, creation of buttons, tableview frame, scrollTableView.
 
-        let offset = CGPoint(x: 100, y: 100)
         let configName = config.jsonConfigName
         let contentRect = config.frame(
             windowName: configName,
             frames: frames,
-            relativeScreen: false,
+            relativeScreen: true,
             top: false,
-            size: defaultContentRect.size,
-            offset: offset,
-            instanceOffset: offset,
+            size: CGSize(width: 700, height: 200),
+            offset: CGPoint(x: 0, y: 0),
+            instanceOffset: CGPoint(x: 40, y: 40),
             instance: instance)
 
         let panel = makeResizingView()

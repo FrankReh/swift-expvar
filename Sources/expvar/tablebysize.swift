@@ -325,18 +325,16 @@ class TableBySizeController: NSObject {
         self.tableBySize = TableBySize(connection: connection, observable: observable)
         self.tableBySize.bindWith(newtableview)
 
-        let offset = CGPoint(x: 50, y: 50)
-
         let configName = config.bySizeConfigName
         let contentRect = config.frame(
             windowName: configName,
             frames: frames,
-            relativeScreen: false,
+            relativeScreen: true,
             top: false,
-            size: CGSize(width: 400, height: 200),
-            offset: offset,
-            instanceOffset: offset,
-            instance: 0) // Just one bysize window from parent.
+            size: CGSize(width: 450, height: 780),
+            offset: CGPoint(x: 200, y: 0),
+            instanceOffset: CGPoint(x: 40, y: 40),
+            instance: connection.id)
 
         let viewController = TableViewController(tableview: newtableview)
 
