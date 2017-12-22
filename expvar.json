@@ -1,0 +1,277 @@
+{
+    "comment": "Extra key/value pairs can appear in the JSON config dictionary with no ill harm",
+    "comment": "So comments can be included in this klunky way.",
+
+    "comment": "endpoints are polled periodically.",
+    "comment": "Unix domain sockets (IPC for short) may include file and directory names.",
+    "comment": "An IPC socket entry can be $TMPDIR, or $TMPDIR/some/subdir.",
+    "comment": "The poll rate unit is seconds.",
+
+    "endpoints": {
+        "pollrates": {
+            "search": 5,
+            "active": 2.5
+        },
+        "ipc-sockets": [ "$TMPDIR" ],
+        "tcp-sockets": [
+            "http://localhost:8000/debug/vars",
+            "http://localhost:8001/debug/vars",
+            "http://localhost:8002/debug/vars",
+            "http://localhost:8003/debug/vars",
+            "http://localhost:8004/debug/vars",
+            "http://localhost:8005/debug/vars",
+            "http://localhost:8006/debug/vars",
+            "http://localhost:8007/debug/vars",
+            "http://localhost:8008/debug/vars",
+            "http://localhost:8009/debug/vars"
+        ]
+    },
+
+    "debug": true,
+    "experimental": {
+        "weaklinks": false,
+        "funModal": false,
+        "addCommand": false
+    },
+    "json": {
+        "backgroundModify": {
+            "insertLastGCPause": true,
+            "insertLastGCPauseIndex": false,
+            "reworkBySizeArray": true
+        }
+    },
+
+    "windows": {
+        "Summary": {
+            "frame": {
+                "offset": {
+                    "top": true,
+                    "dx": 583,
+                    "dy": 59
+                },
+                "size": { "width": 668, "height": 526 },
+                "center": false
+            },
+            "heightOfRow": 50,
+            "left": {
+                "origin": { "x": 24, "y": 63 },
+                "width-ratio": 0.25,
+                "color": {
+                    "cyan": 1.0,
+                    "magenta": 1.0,
+                    "yellow": 1.0,
+                    "black": 1.0,
+                    "alpha": 0.04
+                },
+                "border": {
+                    "color": {
+                        "cyan": 0.5,
+                        "magenta": 0.5,
+                        "yellow": 0.5,
+                        "black": 0.5,
+                        "alpha": 0.2
+                    },
+                    "lineWidth": 3.0
+                }
+            },
+            "right": {
+                "gap": 8,
+                "color": {
+                    "cyan": 1.0,
+                    "magenta": 1.0,
+                    "yellow": 1.0,
+                    "black": 1.0,
+                    "alpha": 0.04
+                },
+                "split": 0.22,
+                "fontSize": 12,
+                "fields": {
+                    "Polls": {
+                        "y": 175,
+                        "height": 25
+                    }
+                },
+                "windowButtons": {
+                    "x": 20,
+                    "y": 372,
+                    "spacing": 8,
+                    "fontSize": 13
+                }
+            },
+            "testitems": [
+                {"name": "name0"},
+                {"name": "name2"}
+            ]
+        },
+        "memstats": {
+            "frame": {
+                "offset": {
+                    "relativeScreen": false,
+                    "top": false,
+                    "dx": 0,
+                    "dy": 23
+                },
+                "instanceOffset": { "dx": 500, "dy": 0 },
+                "size": { "width": 400, "height": 780 },
+                "debugCreation": false
+            },
+            "columns": {
+                "MemStats Field": { "width": 100 },
+                "Current": { "width": 115 },
+                "Delta": { "width": 80 }
+            }
+        },
+        "bysize": {
+            "frame": {
+                "offset": {
+                    "relativeScreen": false,
+                    "top": false,
+                    "dx": 0,
+                    "dy": 23
+                },
+                "instanceOffset": { "dx": 500, "dy": 0 },
+                "size": { "width": 500, "height": 780 },
+                "debugCreation": false
+            },
+            "columns": {
+                "Size": { "width": 55 },
+                "Mallocs (delta)": { "width": 100 },
+                "- Frees (delta)": { "width": 100 },
+                "= Difference (delta)": { "width": 160 }
+            },
+            "popover": {
+                "size": { "width": 200 },
+                "intercellSpacing": { "width": 3.0, "height": 2.0}
+            }
+        },
+        "json": {
+            "columns": {
+                "JSON Field": { "width": 130 },
+                "Prev Value": { "width": 200 },
+                "Next Value (if different)": { "width": 200 },
+                "Delta": { "width": 200 }
+            },
+            "ordering": [
+                "cmdline",
+                "memstats",
+                "storecache_goodput",
+                "storecache_output",
+                "",
+                "Alloc",
+                "TotalAlloc",
+                "Sys",
+                "Lookups",
+                "Size",
+                "Mallocs",
+                "Frees",
+                "HeapAlloc",
+                "HeapSys",
+                "HeapIdle",
+                "HeapInuse",
+                "HeapReleased",
+                "HeapObjects",
+                "StackInuse",
+                "StackSys",
+                "MSpanInuse",
+                "MSpanSys",
+                "MCacheInuse",
+                "MCacheSys",
+                "BuckHashSys",
+                "GCSys",
+                "OtherSys",
+                "NextGC",
+                "LastGC",
+                "LastGCPauseNs",
+                "LastGCPauseIndex",
+                "PauseTotalNs",
+                "PauseNs",
+                "PauseEnd",
+                "Pause",
+                "NumGC",
+                "NumForcedGC",
+                "GCCPUFraction",
+                "EnableGC",
+                "DebugGC",
+                "BySize",
+                "BySize2",
+                "Size[0]",
+                "Size[8]",
+                "Size[16]",
+                "Size[32]",
+                "Size[48]",
+                "Size[64]",
+                "Size[80]",
+                "Size[96]",
+                "Size[112]",
+                "Size[128]",
+                "Size[144]",
+                "Size[160]",
+                "Size[176]",
+                "Size[192]",
+                "Size[208]",
+                "Size[224]",
+                "Size[240]",
+                "Size[256]",
+                "Size[288]",
+                "Size[320]",
+                "Size[352]",
+                "Size[384]",
+                "Size[416]",
+                "Size[448]",
+                "Size[480]",
+                "Size[512]",
+                "Size[576]",
+                "Size[640]",
+                "Size[704]",
+                "Size[768]",
+                "Size[896]",
+                "Size[1024]",
+                "Size[1152]",
+                "Size[1280]",
+                "Size[1408]",
+                "Size[1536]",
+                "Size[1792]",
+                "Size[2048]",
+                "Size[2304]",
+                "Size[2688]",
+                "Size[3072]",
+                "Size[3200]",
+                "Size[3456]",
+                "Size[4096]",
+                "Size[4864]",
+                "Size[5376]",
+                "Size[6144]",
+                "Size[6528]",
+                "Size[6784]",
+                "Size[6912]",
+                "Size[8192]",
+                "Size[9472]",
+                "Size[9728]",
+                "Size[10240]",
+                "Size[10880]",
+                "Size[12288]",
+                "Size[13568]",
+                "Size[14336]",
+                "Size[16384]",
+                "Size[18432]",
+                "Size[19072]"
+            ],
+
+            "comment": "Three sets of field names that deserve special format handling.",
+            "comment": " - JSON fields that should be displayed as dates",
+            "comment": " - JSON fields that should be displayed as booleans",
+            "comment": " - JSON fields that should be displayed as doubles",
+
+            "date-fields": [
+                "LastGC"
+            ],
+            "bool-fields": [
+                "EnableGC",
+                "DebugGC"
+            ],
+            "double-fields": [
+                "GCCPUFraction"
+            ]
+        }
+    }
+}
