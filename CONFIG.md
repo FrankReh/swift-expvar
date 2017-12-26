@@ -14,13 +14,22 @@ The most important function of the config file is provide the filenames or direc
 for IPC socket endpoints and the URLs for the TCP socket endpoints. If the configuration file is not
 found, a default of $TMPDIR is used as the directory to search for IPC (unix domain) sockets.
 
+Presently, $TMPDIR is the only environment variable being interpreted within the configuration.
+
+An example config:
+'''
+{
+    "endpoints": {
+        "ipc-sockets": [ "$TMPDIR", "/some/hardcoded/path/to/a/socketfile" ],
+        "tcp-sockets": [ "http://localhost:8000/debug/vars" ,
+                         "http://localhost:8002/debug/vars" ]
+    }
+}
+'''
+
 ## Window Geometry
 
 Most of the configuration options have to deal with geometry of various windows
 and elements within windows. Sometimes the font size and background color is spelled out too.
-
-There is also a list of fieldnames that is used for defining the order of rows in the JSON window when expanding
-a dictionary of the JSON tree. The JSON dictionary has no inherent sense of the order of the fields that came
-across the wire.
 
 These are development stopgap measures and will be moved into the source.

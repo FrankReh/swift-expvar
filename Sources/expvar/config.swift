@@ -225,54 +225,13 @@ class Config {
         return target
     }
 
-    func adjust(column: NSTableColumn, forWindow: String) {
-        if let dictionary = self.dict.dict("windows", forWindow, "columns") {
-            let title = column.title
-            let warning = {(_ msg: String) in
-                print("config warning: windows/\(forWindow)/columns/\(title) \(msg)")
-            }
-            guard let found = dictionary.find(title) else {
-                warning("missing")
-                return
-            }
-            guard let foundDict = found as? [String: Any?] else {
-                warning("not a dictionary")
-                return
-            }
+    func setColumnWidths(_ columns: [NSTableColumn], forWindow: String, defaultWidths: [CGFloat]) {
+        let widths = self.find("windows", forWindow, "columnWidths") as? [CGFloat] ?? defaultWidths
+        let finalDefault: CGFloat = widths.last ?? 200
 
-            for (key, value) in foundDict {
-                switch key {
-                case "width":
-                    guard let width = value as? CGFloat else {
-                        warning("\(key) not a number value")
-                        return
-                    }
-                    column.width = width
-                case "minWidth":
-                    guard let minWidth = value as? CGFloat else {
-                        warning("\(key) not a number value")
-                        return
-                    }
-                    column.minWidth = minWidth
-                case "maxWidth":
-                    guard let maxWidth = value as? CGFloat else {
-                        warning("\(key) not a number value")
-                        return
-                    }
-                    column.maxWidth = maxWidth
-                // case "resizingMask": // Not implemented.
-                case "sizeToFit":
-                    guard let sizeToFit = value as? Bool else {
-                        warning("\(key) not a boolean value")
-                        return
-                    }
-                    if sizeToFit {
-                        column.sizeToFit()
-                    }
-                default:
-                    warning("key \(key) not recognized")
-                }
-            }
+        for i in 0..<columns.count {
+            let width = (i < widths.count) ? widths[i] : finalDefault
+            columns[i].width = width
         }
     }
 
@@ -315,21 +274,81 @@ class Config {
         return self.jsonOrderingMap!
     }
     private func loadJsonOrdering() -> [String: Int] {
-        var map: [String: Int] = [:]
-        guard let orderingCfg = self.dict.find("windows", "json", "ordering") else {
-            print("config warning, windows/json/ordering not found")
-            return map
+        guard let orderingCfg = self.dict.find("windows", jsonConfigName, "ordering") else {
+            return mapIndexer(strings: defaultOrderingArray())
         }
         guard let array = orderingCfg as? [String] else {
             print("config warning, windows/json/ordering not an array of strings")
-            return map
+            return mapIndexer(strings: defaultOrderingArray())
         }
-        for position in 0..<array.count {
-            let string = array[position]
+        return mapIndexer(strings: array)
+
+    }
+}
+
+private func mapIndexer(strings: [String]) -> [String: Int] {
+        var map: [String: Int] = [:]
+        for position in 0..<strings.count {
+            let string = strings[position]
             map[string] = position
         }
         return map
+}
+
+private func defaultOrderingArray() -> [String] {
+    var strings: [String] = [
+        "cmdline",
+        "memstats",
+        "storecache_goodput",
+        "storecache_output",
+        "Alloc",
+        "TotalAlloc",
+        "Sys",
+        "Lookups",
+        "Size",
+        "Mallocs",
+        "Frees",
+        "HeapAlloc",
+        "HeapSys",
+        "HeapIdle",
+        "HeapInuse",
+        "HeapReleased",
+        "HeapObjects",
+        "StackInuse",
+        "StackSys",
+        "MSpanInuse",
+        "MSpanSys",
+        "MCacheInuse",
+        "MCacheSys",
+        "BuckHashSys",
+        "GCSys",
+        "OtherSys",
+        "NextGC",
+        "LastGC",
+        "LastGCPauseNs",
+        "LastGCPauseIndex",
+        "PauseTotalNs",
+        "PauseNs",
+        "PauseEnd",
+        "Pause",
+        "NumGC",
+        "NumForcedGC",
+        "GCCPUFraction",
+        "EnableGC",
+        "DebugGC",
+        "BySize",
+        "BySize2"
+    ]
+    // Add the size strings in case reworkBySizeArray is true.
+    let sizes: [Int] = [0, 8, 16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176,
+        192, 208, 224, 240, 256, 288, 320, 352, 384, 416, 448, 480, 512, 576,
+        640, 704, 768, 896, 1024, 1152, 1280, 1408, 1536, 1792, 2048, 2304,
+        2688, 3072, 3200, 3456, 4096, 4864, 5376, 6144, 6528, 6784, 6912, 8192,
+        9472, 9728, 10240, 10880, 12288, 13568, 14336, 16384, 18432, 19072 ]
+    for size in sizes {
+        strings.append("Size[\(size)]")
     }
+    return strings
 }
 
 private func sizeI(_ cfg: [String: Any?]?, _ defaultSize: CGSize) -> CGSize {

@@ -376,9 +376,9 @@ private class JsonConfig {
         }
         done = true
 
-        let dateFields = config.find("windows", "json", "date-fields") as? [String] ?? []
-        let boolFields = config.find("windows", "json", "bool-fields") as? [String] ?? []
-        let doubleFields = config.find("windows", "json", "double-fields") as? [String] ?? []
+        let dateFields = config.find("windows", "json", "date-fields") as? [String] ??  ["LastGC"]
+        let boolFields = config.find("windows", "json", "bool-fields") as? [String] ??  ["EnableGC", "DebugGC"]
+        let doubleFields = config.find("windows", "json", "double-fields") as? [String] ??  ["GCCPUFraction"]
 
         let doubleFormatFn = { (_ name: String, _ json: Any?) -> String? in
             if let double = json as? Double {
@@ -614,12 +614,13 @@ class TableJsonCompare: Outline {
             }
             index += 1
 
-            config.adjust(column: tableColumn, forWindow: "json")
-
             // Bind in both directions.
             tableColumn.tableView = outlineview
             outlineview.addTableColumn(tableColumn)
         }
+
+        config.setColumnWidths(outlineview.tableColumns,
+                               forWindow: config.jsonConfigName, defaultWidths: [130, 200, 200, 200])
 
         outlineview.target = self
         outlineview.doubleAction = #selector(doubleClick(_:))

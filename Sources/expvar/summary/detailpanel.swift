@@ -8,7 +8,6 @@ class DetailPanel: NSView {
     weak var connection: Connection?
     let split: CGFloat
     let fontSize: CGFloat
-    let fieldsCfg: [String: Any?]
     var reloadFns: [() -> Void] = []
     let windowButtons: Buttons
     private let flowingTextPanel: FlowingTextPanel
@@ -19,21 +18,19 @@ class DetailPanel: NSView {
 
         let detailCfg = config.find("windows", "Summary", configName) as? [String: Any?] ?? [:]
 
-        let split = detailCfg["split"] as? CGFloat ?? 0.3
+        let split = detailCfg["split"] as? CGFloat ?? 0.22
         self.split = split
 
         let fontSize = detailCfg["fontSize"] as? CGFloat ?? 12
         self.fontSize = fontSize
 
-        self.fieldsCfg = detailCfg["fields"] as? [String: Any?] ?? [:]
-
         self.windowButtons = {
             let cfg = detailCfg["windowButtons"] as? [String: Any?] ?? [:]
 
-            let buttonsOrigin = CGPoint(x: cfg["x"] as? CGFloat ?? 10,
-                                        y: cfg["y"] as? CGFloat ?? 10)
+            let buttonsOrigin = CGPoint(x: cfg["x"] as? CGFloat ?? 20,
+                                        y: cfg["y"] as? CGFloat ?? 372)
 
-            let buttonsSpacing = cfg["spacing"] as? CGFloat ?? 10
+            let buttonsSpacing = cfg["spacing"] as? CGFloat ?? 8
 
             let buttons = Buttons(origin: buttonsOrigin, spacing: buttonsSpacing)
 

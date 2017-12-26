@@ -184,12 +184,12 @@ class TableBySize: NSObject {
 
         for tableColumn in TableBySize.columns {
 
-            config.adjust(column: tableColumn, forWindow: "bysize")
-
             // Bind in both directions.
             tableColumn.tableView = tableview
             tableview.addTableColumn(tableColumn)
         }
+        config.setColumnWidths(tableview.tableColumns,
+                               forWindow: config.bySizeConfigName, defaultWidths: [55, 100, 100, 160])
 
         tableview.target = self
         tableview.action = #selector(singleClick(_:))

@@ -148,13 +148,14 @@ class TableMemStats: NSObject {
 
         for tableColumn in TableMemStats.columns {
 
-            config.adjust(column: tableColumn, forWindow: "memstats")
-
             // Bind in both directions.
             tableColumn.tableView = tableview
             tableview.addTableColumn(tableColumn)
 
         }
+        config.setColumnWidths(tableview.tableColumns,
+                               forWindow: config.memStatsConfigName, defaultWidths: [100, 115, 80])
+
         // For single click.
         tableview.target = self
         tableview.action = #selector(singleClick(_:))
