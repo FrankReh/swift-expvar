@@ -453,9 +453,6 @@ struct Vars {
     let jsonDict: [String: Any?]
     let cmdline: [String]
     let memstats: MemStats
-    // These two are hacks for now. Figure out how to handle extra fields later.
-    let storecacheGoodput: Double
-    let storecacheOutput: Double
 }
 
 struct Pair {
@@ -477,16 +474,12 @@ class VarsHistory {
     var cmdline: [String]
     var cmdlineChanges: Int = 0
     var memstats: MemStatsHistory
-    var storecacheGoodput: History<Double>
-    var storecacheOutput: History<Double>
 
     init(_ vars: Vars) {
         lastJsonDict = vars.jsonDict
         stats = HistoryStats()
         cmdline = vars.cmdline
         memstats = MemStatsHistory(stats, vars.memstats)
-        storecacheGoodput = History<Double>(stats, vars.storecacheGoodput, name: "StorecacheGoodput", toString: toStringDouble)
-        storecacheOutput = History<Double>(stats, vars.storecacheOutput, name: "StorecacheOutput", toString: toStringDouble)
     }
     func add(_ vars: Vars) {
         lastJsonDict = vars.jsonDict
@@ -495,14 +488,10 @@ class VarsHistory {
             cmdlineChanges += 1
         }
         memstats.add(stats, vars.memstats)
-        storecacheGoodput.add(stats, vars.storecacheGoodput)
-        storecacheOutput.add(stats, vars.storecacheOutput)
     }
     func printLastDelta() -> ([Pair], [BySizeDiff]) {
         var r: [Pair] = []
         r.append(Pair("cmdline", cmdline))
-        r += storecacheGoodput.printLastDelta("storecacheGoodput")
-        r += storecacheOutput.printLastDelta("storecacheOutput")
         let (pairs, bysizediffs) = memstats.printLastDelta("memstats")
         r += pairs
         return (r, bysizediffs)
@@ -734,35 +723,11 @@ func jsonToBySize(_ dict: [String: Any?]) throws -> BySize {
     )
 }
 
-// doubleRemoveOps takes a string ending in " ops/s", trims it, and converts to Double.
-func doubleRemoveOps(_ value: String) throws -> Double {
-    var value = value
-    let suffix = " ops/s"
-    if value.hasSuffix(suffix) {
-        value.removeLast(suffix.count)
-    }
-    guard let double = Double(value) else {
-        throw ExpVarError.notDoubleConvertible(string: value)
-    }
-    return double
-}
-
 func jsonToExpVar(_ dict: [String: Any?]) throws -> Vars {
-    var storecacheGoodput: Double = 0
-    do {
-        storecacheGoodput = try doubleRemoveOps(try jsonDictValToString(dict, key: "storecache-goodput"))
-    }
-    var storecacheOutput: Double = 0
-    do {
-        storecacheOutput  = try doubleRemoveOps(try jsonDictValToString(dict, key: "storecache-output"))
-    }
-
     return Vars(
         jsonDict: dict,
         cmdline: try jsonDictValToStringArray(dict, key: "cmdline"),
-        memstats: try jsonToMemStats(try lookupDict(dict, key: "memstats")),
-        storecacheGoodput: storecacheGoodput,
-        storecacheOutput: storecacheOutput
+        memstats: try jsonToMemStats(try lookupDict(dict, key: "memstats"))
         )
 }
 private func rangesDebugString(_ ranges: [ArraySlice<Int64>]) -> String {
